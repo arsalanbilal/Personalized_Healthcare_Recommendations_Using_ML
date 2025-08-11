@@ -33,17 +33,27 @@ if st.button("🚀 Predict"):
     with st.spinner('Calculating prediction...'):
         time.sleep(1)
 
+
+    # Mapping predictions to messages
+    if predictions[0] == 0:
+        message = "🟢 **Low-Risk Health Category** – You are currently in a low-risk group. Keep up your healthy habits!"
+        bg_color = "#e8f5e9"  # Light green
+        text_color = "#2e7d32"
+    else:
+        message = "🔴 **High-Risk Health Category** – You may be at higher risk. Please consider a professional health consultation."
+        bg_color = "#ffebee"  # Light red
+        text_color = "#c62828"
+
     # Stylish display
     st.success("✅ Prediction Completed!")
     st.markdown(
         f"""
-        <div style="background-color:#f0f8ff;padding:20px;border-radius:10px;text-align:center;">
-            <h2 style="color:#1E90FF;">Predicted Value</h2>
-            <h1 style="color:#FF4500;font-size:60px;">{predictions[0]:,.2f}</h1>
-            <p style="color:gray;">Estimated Uber demand based on provided features</p>
+        <div style="background-color:{bg_color};padding:20px;border-radius:10px;text-align:center;">
+            <h2 style="color:{text_color};">Prediction Result</h2>
+            <p style="font-size:20px;color:{text_color};">{message}</p>
         </div>
         """, unsafe_allow_html=True
     )
 
     # Optional: Metric display
-    st.metric(label="📈 Predicted Health Status", value=f"{predictions[0]:,.2f}")
+    st.metric(label="📊 Predicted Health Status", value="Low Risk" if predictions[0] == 0 else "High Risk")
