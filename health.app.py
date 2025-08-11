@@ -21,9 +21,9 @@ st.info("Adjust the input parameters in the sidebar to see the prediction in rea
 # Sidebar inputs
 with st.sidebar:
     st.header('📊 Input Features')
-    Recency = st.slider('Recency', 0.0, 26.0)
-    Frequency = st.slider('Frequency', 1.0, 12.0)
-    Monetary = st.slider('Monetary', 250.0, 3000.0)
+    Recency = st.slider('Recency', 0, 26)
+    Frequency = st.slider('Frequency', 1, 12)
+    Monetary = st.slider('Monetary', 250, 3000)
     Time = st.slider('Time', 2, 99)
 
 # Predict button
