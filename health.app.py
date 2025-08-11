@@ -8,6 +8,10 @@ import pickle
 with open('best_model.pkl', 'rb') as f:
     best_model = pickle.load(f)
 
+# Load the Scaler 
+with open('scaler.pkl', 'rb') as f:
+    scaler = pickle.load(f)
+
 st.set_page_config(page_title="Personlized Healthcare Recommendations", page_icon="🩺", layout="centered")
 st.title('🩺 ersonlized Healthcare Recommendations Prediction')
 st.markdown("**Machine Learning Model: LogisticRegression**")
@@ -27,7 +31,8 @@ if st.button("🚀 Predict"):
     data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
                         columns=['Recency', 'Frequency', 'Monetary', 'Time'])
 
-    predictions = best_model.predict(data)
+    data_scaled = scaler.transform(data)
+    predictions = best_model.predict(data_scaled)
 
     # Simulate a loading animation
     with st.spinner('Calculating prediction...'):
