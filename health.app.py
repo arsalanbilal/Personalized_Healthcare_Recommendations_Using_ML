@@ -23,7 +23,7 @@ with st.sidebar:
     Time = st.slider('Time', 0.0, 1.0)
 
 # Predict button
-if st.button("🚀 Predict"):
+    if st.button("🚀 Predict"):
     data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
                         columns=['Recency', 'Frequency', 'Monetary', 'Time'])
 
@@ -45,9 +45,9 @@ if st.button("🚀 Predict"):
         """, unsafe_allow_html=True
     )
 
-      if predictions[0] ==1:
+if predictions[0] ==1:
     st.success("You are likely to have Diabities.")
-  else:
+else:
     st.success("You are Unlikely to have Diabities")  
 
     # Optional: Metric display
