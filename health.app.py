@@ -9,7 +9,7 @@ with open('best_model.pkl', 'rb') as f:
     best_model = pickle.load(f)
 
 st.set_page_config(page_title="Personlized Healthcare Recommendations", page_icon="🩺", layout="centered")
-st.title('🩺 ersonlized Healthcare Recommendations Prediction')
+st.title('🩺 Personlized Healthcare Recommendations Prediction')
 st.markdown("**Machine Learning Model: LogisticRegression**")
 st.info("Adjust the input parameters in the sidebar to see the prediction in real time.")
 
