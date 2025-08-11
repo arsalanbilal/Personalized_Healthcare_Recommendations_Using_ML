@@ -24,7 +24,7 @@ with st.sidebar:
     Recency = st.slider('Recency', 0., 26.)
     Frequency = st.slider('Frequency', 1., 12.)
     Monetary = st.slider('Monetary', 250., 3000.)
-    Time = st.slider('Time', 2,, 99.)
+    Time = st.slider('Time', 2., 99.)
 
 # Predict button
 if st.button("🚀 Predict"):
