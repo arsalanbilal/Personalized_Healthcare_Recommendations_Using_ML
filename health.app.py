@@ -36,8 +36,8 @@ with st.sidebar:
  # Mapping predictions to messages
     if predictions[0] == 1:
        message = "🔴 **High-Risk Health Category** – You may be at higher risk. Please consider a professional health consultation."
-        bg_color = "#ffebee"  # Light red
-        text_color = "#c62828"
+       bg_color = "#ffebee"  # Light red
+       text_color = "#c62828"
     else:
         message = "🟢 **Low-Risk Health Category** – You are currently in a low-risk group. Keep up your healthy habits!"
         bg_color = "#e8f5e9"  # Light green
