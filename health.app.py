@@ -56,8 +56,3 @@ if st.button("🚀 Predict"):
 
     # Optional: Metric display
     st.metric(label="📊 Predicted Health Status", value="Low Risk" if predictions[0] == 0 else "High Risk")
-
-
-
-    # Optional: Metric display
-    st.metric(label="📈 Predicted Health Status", value=f"{predictions[0]:,.2f}")
