@@ -1,64 +1,90 @@
 import streamlit as st
 import pandas as pd
 import time
-from sklearn.preprocessing import StandardScaler
 import pickle
 
 # Load the model
 with open('best_model.pkl', 'rb') as f:
     best_model = pickle.load(f)
 
-# Load the Scaler 
+# Load the scaler
 with open('scaler.pkl', 'rb') as f:
     scaler = pickle.load(f)
 
-st.set_page_config(page_title="Personlized Healthcare Recommendations", page_icon="🩺", layout="centered")
-st.title('🩺 ersonlized Healthcare Recommendations Prediction')
+st.set_page_config(page_title="Personalized Healthcare Recommendations", page_icon="🩺", layout="centered")
+st.title('🩺 Personalized Healthcare Recommendations Prediction')
 st.markdown("**Machine Learning Model: LogisticRegression**")
 st.info("Adjust the input parameters in the sidebar to see the prediction in real time.")
 
+# Default values (replace with raw unscaled values from inverse transform)
+low_risk_values = {"Recency": 4.0, "Frequency": 7.0, "Monetary": 1750.0, "Time": 25.0}
+high_risk_values = {"Recency": 2.0, "Frequency": 10.0, "Monetary": 2500.0, "Time": 49.0}
 
 # Sidebar inputs
 with st.sidebar:
     st.header('📊 Input Features')
-    Recency = st.slider('Recency', min_value =0.0, max_value = 26.0)
-    Frequency = st.slider('Frequency', min_value = 1.0, max_value = 12.0)
-    Monetary = st.slider('Monetary', min_value = 250.0, max_value = 3000.0)
-    Time = st.slider('Time', min_value = 2.0, max_value =99.0)
+
+    # Quick-set buttons
+    if st.button("Set Low Risk Example"):
+        Recency = low_risk_values["Recency"]
+        Frequency = low_risk_values["Frequency"]
+        Monetary = low_risk_values["Monetary"]
+        Time = low_risk_values["Time"]
+    elif st.button("Set High Risk Example"):
+        Recency = high_risk_values["Recency"]
+        Frequency = high_risk_values["Frequency"]
+        Monetary = high_risk_values["Monetary"]
+        Time = high_risk_values["Time"]
+    else:
+        Recency = st.slider('Recency', 0.0, 26.0)
+        Frequency = st.slider('Frequency', 1.0, 12.0)
+        Monetary = st.slider('Monetary', 250.0, 3000.0)
+        Time = st.slider('Time', 0.0, 50.0)  # Adjusted to your range
 
 # Predict button
 if st.button("🚀 Predict"):
     data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
                         columns=['Recency', 'Frequency', 'Monetary', 'Time'])
 
+    # Apply scaling
     data_scaled = scaler.transform(data)
     predictions = best_model.predict(data_scaled)
 
-    # Simulate a loading animation
     with st.spinner('Calculating prediction...'):
         time.sleep(1)
 
-
-    # Mapping predictions to messages
-    if predictions[0] == 0:
-        message = "🟢 **Low-Risk Health Category** – You are currently in a low-risk group. Keep up your healthy habits!"
-        bg_color = "#e8f5e9"  # Light green
-        text_color = "#2e7d32"
-    else:
-        message = "🔴 **High-Risk Health Category** – You may be at higher risk. Please consider a professional health consultation."
-        bg_color = "#ffebee"  # Light red
-        text_color = "#c62828"
-
-    # Stylish display
     st.success("✅ Prediction Completed!")
-    st.markdown(
-        f"""
-        <div style="background-color:{bg_color};padding:20px;border-radius:10px;text-align:center;">
-            <h2 style="color:{text_color};">Prediction Result</h2>
-            <p style="font-size:20px;color:{text_color};">{message}</p>
-        </div>
-        """, unsafe_allow_html=True
-    )
 
-    # Optional: Metric display
+    # Animated display cards
+    if predictions[0] == 0:
+        st.markdown("""
+        <div style="background-color:#e8f5e9;padding:20px;border-radius:15px;text-align:center;
+                    animation: fadeIn 1s;">
+            <h2 style="color:#2e7d32;">🟢 Low-Risk Health Category</h2>
+            <p style="font-size:18px;">You are in a low-risk category. Keep up your healthy lifestyle!</p>
+        </div>
+        <style>
+            @keyframes fadeIn {
+                from { opacity: 0; }
+                to { opacity: 1; }
+            }
+        </style>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown("""
+        <div style="background-color:#ffebee;padding:20px;border-radius:15px;text-align:center;
+                    animation: pulse 1s infinite;">
+            <h2 style="color:#c62828;">🔴 High-Risk Health Category</h2>
+            <p style="font-size:18px;">You may be at higher risk. We recommend a professional health check-up.</p>
+        </div>
+        <style>
+            @keyframes pulse {
+                0% { box-shadow: 0 0 0 0 rgba(198,40,40, 0.7); }
+                70% { box-shadow: 0 0 0 10px rgba(198,40,40, 0); }
+                100% { box-shadow: 0 0 0 0 rgba(198,40,40, 0); }
+            }
+        </style>
+        """, unsafe_allow_html=True)
+
     st.metric(label="📊 Predicted Health Status", value="Low Risk" if predictions[0] == 0 else "High Risk")
+
