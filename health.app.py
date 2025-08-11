@@ -33,6 +33,16 @@ with st.sidebar:
     with st.spinner('Calculating prediction...'):
         time.sleep(1)
 
+        # Mapping predictions to messages
+    if predictions[0] == 0:
+        message = "🟢 **Low-Risk Health Category** – You are currently in a low-risk group. Keep up your healthy habits!"
+        bg_color = "#e8f5e9"  # Light green
+        text_color = "#2e7d32"
+    else:
+        message = "🔴 **High-Risk Health Category** – You may be at higher risk. Please consider a professional health consultation."
+        bg_color = "#ffebee"  # Light red
+        text_color = "#c62828"
+
     # Stylish display
     st.success("✅ Prediction Completed!")
     st.markdown(
@@ -45,10 +55,7 @@ with st.sidebar:
         """, unsafe_allow_html=True
     )
 
-if predictions[0] ==1:
-    st.success("You are likely to have Diabities.")
-else:
-    st.success("You are Unlikely to have Diabities")  
+
 
     # Optional: Metric display
     st.metric(label="📈 Predicted Health Status", value=f"{predictions[0]:,.2f}")
