@@ -27,7 +27,7 @@ with st.sidebar:
         data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
                         columns=['Recency', 'Frequency', 'Monetary', 'Time'])
 
-    predictions = best_model.predict(data)
+        predictions = best_model.predict(data)
 
     # Simulate a loading animation
     with st.spinner('Calculating prediction...'):
