@@ -45,5 +45,10 @@ if st.button("🚀 Predict"):
         """, unsafe_allow_html=True
     )
 
+      if predictions[0] ==1:
+    st.success("You are likely to have Diabities.")
+  else:
+    st.success("You are Unlikely to have Diabities")  
+
     # Optional: Metric display
     st.metric(label="📈 Predicted Health Status", value=f"{predictions[0]:,.2f}")
