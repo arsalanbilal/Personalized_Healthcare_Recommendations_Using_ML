@@ -24,7 +24,7 @@ with st.sidebar:
 
 # Predict button
     if st.button("🚀 Predict"):
-    data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
+        data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
                         columns=['Recency', 'Frequency', 'Monetary', 'Time'])
 
     predictions = best_model.predict(data)
