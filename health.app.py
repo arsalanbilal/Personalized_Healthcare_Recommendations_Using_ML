@@ -23,21 +23,21 @@ with st.sidebar:
     Time = st.slider('Time', 0.0, 1.0)
 
 # Predict button
-    if st.button("🚀 Predict"):
-        data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
+if st.button("🚀 Predict"):
+    data = pd.DataFrame([[Recency, Frequency, Monetary, Time]],
                         columns=['Recency', 'Frequency', 'Monetary', 'Time'])
 
-        predictions = best_model.predict(data)
+    predictions = best_model.predict(data)
 
     # Simulate a loading animation
     with st.spinner('Calculating prediction...'):
         time.sleep(1)
 
- # Mapping predictions to messages
+    # Mapping predictions to messages
     if predictions[0] == 1:
-       message = "🔴 **High-Risk Health Category** – You may be at higher risk. Please consider a professional health consultation."
-       bg_color = "#ffebee"  # Light red
-       text_color = "#c62828"
+        message = "🔴 **High-Risk Health Category** – You may be at higher risk. Please consider a professional health consultation."
+        bg_color = "#ffebee"  # Light red
+        text_color = "#c62828"
     else:
         message = "🟢 **Low-Risk Health Category** – You are currently in a low-risk group. Keep up your healthy habits!"
         bg_color = "#e8f5e9"  # Light green
@@ -47,13 +47,15 @@ with st.sidebar:
     st.success("✅ Prediction Completed!")
     st.markdown(
         f"""
-        <div style="background-color:#f0f8ff;padding:20px;border-radius:10px;text-align:center;">
-            <h2 style="color:#1E90FF;">Predicted Value</h2>
-            <h1 style="color:#FF4500;font-size:60px;">{predictions[0]:,.2f}</h1>
-            <p style="color:gray;">Estimated Uber demand based on provided features</p>
+        <div style="background-color:{bg_color};padding:20px;border-radius:10px;text-align:center;">
+            <h2 style="color:{text_color};">Prediction Result</h2>
+            <p style="font-size:20px;color:{text_color};">{message}</p>
         </div>
         """, unsafe_allow_html=True
     )
+
+    # Optional: Metric display
+    st.metric(label="📊 Predicted Health Status", value="Low Risk" if predictions[0] == 0 else "High Risk")
 
 
 
