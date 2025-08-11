@@ -7,39 +7,20 @@ import pickle
 with open('best_model.pkl', 'rb') as f:
     best_model = pickle.load(f)
 
-# Load the scaler
-with open('scaler.pkl', 'rb') as f:
-    scaler = pickle.load(f)
+
 
 st.set_page_config(page_title="Personalized Healthcare Recommendations", page_icon="🩺", layout="centered")
 st.title('🩺 Personalized Healthcare Recommendations Prediction')
 st.markdown("**Machine Learning Model: LogisticRegression**")
 st.info("Adjust the input parameters in the sidebar to see the prediction in real time.")
 
-# Default values (replace with raw unscaled values from inverse transform)
-low_risk_values = {"Recency": 4.0, "Frequency": 7.0, "Monetary": 1750.0, "Time": 25.0}
-high_risk_values = {"Recency": 2.0, "Frequency": 10.0, "Monetary": 2500.0, "Time": 49.0}
+
 
 # Sidebar inputs
 with st.sidebar:
     st.header('📊 Input Features')
-
-    # Quick-set buttons
-    if st.button("Set Low Risk Example"):
-        Recency = low_risk_values["Recency"]
-        Frequency = low_risk_values["Frequency"]
-        Monetary = low_risk_values["Monetary"]
-        Time = low_risk_values["Time"]
-    elif st.button("Set High Risk Example"):
-        Recency = high_risk_values["Recency"]
-        Frequency = high_risk_values["Frequency"]
-        Monetary = high_risk_values["Monetary"]
-        Time = high_risk_values["Time"]
-    else:
-        Recency = st.slider('Recency', 0.0, 26.0)
-        Frequency = st.slider('Frequency', 1.0, 12.0)
-        Monetary = st.slider('Monetary', 250.0, 3000.0)
-        Time = st.slider('Time', 0.0, 50.0)  # Adjusted to your range
+    Recency = st.slider('Recency', 
+ 
 
 # Predict button
 if st.button("🚀 Predict"):
