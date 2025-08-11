@@ -21,10 +21,10 @@ st.info("Adjust the input parameters in the sidebar to see the prediction in rea
 # Sidebar inputs
 with st.sidebar:
     st.header('📊 Input Features')
-    Recency = st.slider('Recency', 0., 26.)
-    Frequency = st.slider('Frequency', 1., 12.)
-    Monetary = st.slider('Monetary', 250., 3000.)
-    Time = st.slider('Time', 2., 99.)
+    Recency = st.slider('Recency', min_value =0.0, max_value = 26.0)
+    Frequency = st.slider('Frequency', min_value = 1.0, max_value = 12.0)
+    Monetary = st.slider('Monetary', min_value = 250.0, max_value = 3000.0)
+    Time = st.slider('Time', min_value = 2.0, max_value =99.0)
 
 # Predict button
 if st.button("🚀 Predict"):
